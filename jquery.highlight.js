@@ -30,6 +30,10 @@
  *   // with <em class='important'>
  *   $('#content').highlight('ipsum', { element: 'em', className: 'important' });
  *
+ *   // wrap every occurrance of term 'ipsum' in content
+ *   // with <em>
+ *   $('#content').highlight('ipsum', { element: 'em', className: false });
+ *
  *   // remove default highlight
  *   $('#content').unhighlight();
  *
@@ -49,7 +53,9 @@ jQuery.extend({
             var match = node.data.match(re);
             if (match) {
                 var highlight = document.createElement(nodeName || 'span');
-                highlight.className = className || 'highlight';
+                if (className) {
+                  highlight.className = className;
+                }
                 var wordNode = node.splitText(match.index);
                 wordNode.splitText(match[0].length);
                 var wordClone = wordNode.cloneNode(true);
